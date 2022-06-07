@@ -6,6 +6,7 @@ import com.gruntik.hibernateex.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -26,6 +27,7 @@ public class UserOrderTests {
 
     @Test
     void lazy() {
+        System.out.println("----------------------");
         Transaction tx = session.getTransaction();
         tx.begin();
 
@@ -52,15 +54,25 @@ public class UserOrderTests {
         tx.commit();
 
         Order order2Fetch = getOrderById(2L);
-        removeEntityTx(order2Fetch);
+//        removeEntityTx(order2Fetch);
 
         User user1 = getUserById(1L);
-        System.out.println("order after remove: " + user1.getOrder());
 
-        List<Order> orders = getOrders();
+        Assertions.assertEquals(2, user1.getOrder().size());
 
-        System.out.println("--orders");
-        System.out.println(orders);
+        user1.getOrder().remove(order2Fetch);
+        saveEntityTx(user1);
+//
+//        List<Order> orders = getOrders();
+//
+//        System.out.println("--orders");
+//        System.out.println(orders);
+//
+//        user1 = getUserById(1L);
+//
+        Assertions.assertEquals(1, user1.getOrder().size());
+
+        System.out.println("----------------------");
 
     }
 
@@ -84,6 +96,10 @@ public class UserOrderTests {
 
     private Order getOrderById(Long id) {
         return entityManager.find(Order.class, id);
+    }
+
+    private List<User> getUsers() {
+        return (List<User>) entityManager.createQuery("select u from User u").getResultList();
     }
 
     private List<Order> getOrders() {

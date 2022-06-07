@@ -1,18 +1,23 @@
 package com.gruntik.hibernateex.util;
 
+import com.github.fluent.hibernate.cfg.scanner.EntityScanner;
 import com.gruntik.hibernateex.entity.*;
 import com.gruntik.hibernateex.entity.example.Author;
 import com.gruntik.hibernateex.entity.example.Book;
+import com.gruntik.hibernateex.entity.onetoone.Phone;
+import com.gruntik.hibernateex.entity.onetoone.PhoneDetail;
 import com.gruntik.hibernateex.entity.univ.Ps5;
 import com.gruntik.hibernateex.entity.univ.Store;
 import com.gruntik.hibernateex.entity.userorder.Order;
 import com.gruntik.hibernateex.entity.userorder.User;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import java.util.List;
 import java.util.Properties;
 
 public class HibernateUtil {
@@ -32,21 +37,18 @@ public class HibernateUtil {
         settings.put(Environment.HBM2DDL_AUTO, "create-drop");
 
         configuration.setProperties(settings);
-        configuration.addAnnotatedClass(Pet.class);
-        configuration.addAnnotatedClass(Person.class);
-        configuration.addAnnotatedClass(Phone.class);
-        configuration.addAnnotatedClass(User.class);
-        configuration.addAnnotatedClass(Order.class);
-        configuration.addAnnotatedClass(Store.class);
-        configuration.addAnnotatedClass(Ps5.class);
-        configuration.addAnnotatedClass(Book.class);
-        configuration.addAnnotatedClass(Author.class);
+
+        List<Class<?>> classes = EntityScanner.scanPackages("com.gruntik.hibernateex.entity").result();
+
+        for (Class<?> annotatedClass : classes) {
+            configuration.addAnnotatedClass(annotatedClass);
+        }
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();
-        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
+        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         return sessionFactory;
     }
 

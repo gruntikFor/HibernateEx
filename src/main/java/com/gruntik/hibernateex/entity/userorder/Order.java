@@ -25,6 +25,11 @@ public class Order implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Order(Long orderId, String title) {
+        this.orderId = orderId;
+        this.title = title;
+    }
+
     @Override
     public String toString() {
         return "OrderDetail{" +

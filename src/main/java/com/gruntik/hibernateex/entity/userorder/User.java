@@ -26,6 +26,11 @@ public class User implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
     private Set<Order> order = new HashSet<>();
 
+    public User(Long userId, String name) {
+        this.userId = userId;
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "UserLazy{" +
