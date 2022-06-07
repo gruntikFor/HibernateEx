@@ -3,10 +3,7 @@ package com.gruntik.hibernateex.entity.onetoone;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -21,6 +18,9 @@ public class Phone {
 
     @Column(name = "`number`")
     String number;
+
+    @OneToOne(mappedBy = "phone", cascade = CascadeType.MERGE)
+    PhoneDetail phoneDetail;
 
     public Phone(Long id, String number) {
         this.id = id;
@@ -43,5 +43,13 @@ public class Phone {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (number != null ? number.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                '}';
     }
 }

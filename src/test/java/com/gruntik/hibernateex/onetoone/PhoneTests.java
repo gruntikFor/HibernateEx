@@ -28,10 +28,22 @@ public class PhoneTests {
         saveEntity(iPhone);
 
         PhoneDetail phoneDetail = new PhoneDetail(1L, "MTC", "5G");
+        phoneDetail.setPhone(iPhone);
         saveEntity(phoneDetail);
 
         assertEquals(findAllPhones().get(0), iPhone);
         assertEquals(findAllPhoneDetails().get(0), phoneDetail);
+
+        Phone phoneFetch = getPhoneById(1L);
+        phoneFetch.setPhoneDetail(phoneDetail);
+        saveEntity(phoneFetch);
+
+        System.out.println("phoneFetch:" + getPhoneById(1L).getPhoneDetail());
+
+        PhoneDetail phoneDetail1 = getPhoneDetailById(1L);
+        System.out.println("phoneDetail: " + phoneDetail1);
+
+        System.out.println();
         System.out.println("------------");
     }
 
@@ -40,6 +52,24 @@ public class PhoneTests {
         tx.begin();
         session.save(object);
         tx.commit();
+    }
+
+    public Phone getPhoneById(Long id) {
+        Transaction tx = session.getTransaction();
+        tx.begin();
+        Phone phone = session.load(Phone.class, id);
+        tx.commit();
+
+        return phone;
+    }
+
+    public PhoneDetail getPhoneDetailById(Long id) {
+        Transaction tx = session.getTransaction();
+        tx.begin();
+        PhoneDetail phoneDetail = session.load(PhoneDetail.class, id);
+        tx.commit();
+
+        return phoneDetail;
     }
 
     public List<Phone> findAllPhones() {

@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -22,6 +20,10 @@ public class PhoneDetail {
     Long id;
     String provider;
     String technology;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "phone_id")
+    Phone phone;
 
     public PhoneDetail(Long id, String provider, String technology) {
         this.id = id;
@@ -47,5 +49,10 @@ public class PhoneDetail {
         result = 31 * result + (provider != null ? provider.hashCode() : 0);
         result = 31 * result + (technology != null ? technology.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PhoneDetail{" + "id=" + id + ", provider='" + provider + '\'' + ", technology='" + technology + '\'' + '}';
     }
 }
