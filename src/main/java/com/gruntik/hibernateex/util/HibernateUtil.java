@@ -1,17 +1,7 @@
 package com.gruntik.hibernateex.util;
 
 import com.github.fluent.hibernate.cfg.scanner.EntityScanner;
-import com.gruntik.hibernateex.entity.*;
-import com.gruntik.hibernateex.entity.example.Author;
-import com.gruntik.hibernateex.entity.example.Book;
-import com.gruntik.hibernateex.entity.onetoone.Phone;
-import com.gruntik.hibernateex.entity.onetoone.PhoneDetail;
-import com.gruntik.hibernateex.entity.univ.Ps5;
-import com.gruntik.hibernateex.entity.univ.Store;
-import com.gruntik.hibernateex.entity.userorder.Order;
-import com.gruntik.hibernateex.entity.userorder.User;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
@@ -38,11 +28,7 @@ public class HibernateUtil {
 
         configuration.setProperties(settings);
 
-        List<Class<?>> classes = EntityScanner.scanPackages("com.gruntik.hibernateex.entity").result();
-
-        for (Class<?> annotatedClass : classes) {
-            configuration.addAnnotatedClass(annotatedClass);
-        }
+        scanPackages(configuration, "com.gruntik.hibernateex.entity");
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
@@ -52,11 +38,20 @@ public class HibernateUtil {
         return sessionFactory;
     }
 
+
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             sessionFactory = buildSessionFactory();
         }
         return sessionFactory;
+    }
+
+    private static void scanPackages(Configuration configuration, String pack) {
+        List<Class<?>> classes = EntityScanner.scanPackages(pack).result();
+
+        for (Class<?> annotatedClass : classes) {
+            configuration.addAnnotatedClass(annotatedClass);
+        }
     }
 
 }
