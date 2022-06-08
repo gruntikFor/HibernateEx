@@ -1,4 +1,4 @@
-package com.gruntik.hibernateex.entity.manytomanynew;
+package com.gruntik.hibernateex.entity.manytomany.onetomany;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

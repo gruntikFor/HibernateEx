@@ -1,4 +1,4 @@
-package com.gruntik.hibernateex.entity.manytomany;
+package com.gruntik.hibernateex.entity.manytomany.implicittable;
 
 import lombok.AccessLevel;
 import lombok.Getter;

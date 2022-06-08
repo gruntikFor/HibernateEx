@@ -1,10 +1,9 @@
 package com.gruntik.hibernateex.manytomany2;
 
-import com.gruntik.hibernateex.entity.manytomanynew.AddressNew;
-import com.gruntik.hibernateex.entity.manytomanynew.PersonNew;
+import com.gruntik.hibernateex.entity.manytomany.onetomany.AddressNew;
+import com.gruntik.hibernateex.entity.manytomany.onetomany.PersonNew;
 import com.gruntik.hibernateex.service.CommonServices;
 import com.gruntik.hibernateex.util.HibernateUtil;
-import org.assertj.core.util.Lists;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;

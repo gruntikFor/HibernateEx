@@ -25,6 +25,7 @@ dependencies {
 
     implementation 'com.google.guava:guava:31.1-jre'
 
+    testImplementation 'org.hibernate:hibernate-testing:6.1.0.Final'
     implementation 'com.github.v-ladynev:fluent-hibernate-core:0.3.1'
 }
 

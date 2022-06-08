@@ -1,18 +1,15 @@
 package com.gruntik.hibernateex.manytomany;
 
-import com.gruntik.hibernateex.entity.manytomany.Address;
-import com.gruntik.hibernateex.entity.manytomany.Person;
+import com.gruntik.hibernateex.entity.manytomany.implicittable.Address;
+import com.gruntik.hibernateex.entity.manytomany.implicittable.Person;
 import com.gruntik.hibernateex.service.CommonServices;
 import com.gruntik.hibernateex.util.HibernateUtil;
 import org.assertj.core.util.Lists;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
